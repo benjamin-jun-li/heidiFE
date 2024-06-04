@@ -6,7 +6,15 @@ export type Recording = {
   transcription: string;
 };
 
-const useOfflineStore = create((set) => ({
+interface IOfflineStore {
+    isOffline: boolean;
+    pendingRecordings: Recording[];
+    setOfflineStatus: (status: boolean) => void;
+    addPendingRecording: (recording: Recording) => void;
+    clearPendingRecordings: () => void;
+}
+
+const useOfflineStore = create<IOfflineStore>((set) => ({
   isOffline: navigator.onLine === false,
   pendingRecordings: [],
   setOfflineStatus: (status: boolean) => set({ isOffline: status }),

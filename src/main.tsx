@@ -21,6 +21,7 @@ const router = createBrowserRouter(
 
 const rootElement = document.getElementById('root');
 if (rootElement) {
+  rootElement.style.height = "100vh";
   ReactDOM.createRoot(rootElement).render(
     <React.StrictMode>
       <Header />

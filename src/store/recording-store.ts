@@ -1,6 +1,17 @@
 import { create } from 'zustand';
 
-const useRecordingStore = create((set) => ({
+interface IRecordingStore {
+  isRecording: boolean;
+  isPaused: boolean;
+  transcribedText: string;
+  startRecording: () => void;
+  pauseRecording: () => void;
+  resumeRecording: () => void;
+  stopRecording: () => void;
+  setTranscribedText: (text: string) => void;
+}
+
+const useRecordingStore = create<IRecordingStore>((set) => ({
   isRecording: false,
   isPaused: false,
   transcribedText: '',
