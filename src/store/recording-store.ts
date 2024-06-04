@@ -1,25 +1,24 @@
 import { create } from 'zustand';
 
+export enum RecordingStatus {
+  NotRecording = 'NotRecording',
+  Recording = 'Recording',
+  Paused = 'Paused',
+  Finished = 'Finished',
+}
+
 interface IRecordingStore {
-  isRecording: boolean;
-  isPaused: boolean;
-  transcribedText: string;
-  startRecording: () => void;
-  pauseRecording: () => void;
-  resumeRecording: () => void;
-  stopRecording: () => void;
-  setTranscribedText: (text: string) => void;
+  recordingStatus: RecordingStatus;
+  onRecordingStatusChange: (status: RecordingStatus) => void;
+  audio: Blob | null;
+  setAudio: (audio: Blob) => void;
 }
 
 const useRecordingStore = create<IRecordingStore>((set) => ({
-  isRecording: false,
-  isPaused: false,
-  transcribedText: '',
-  startRecording: () => set({ isRecording: true, isPaused: false }),
-  pauseRecording: () => set({ isPaused: true }),
-  resumeRecording: () => set({ isPaused: false }),
-  stopRecording: () => set({ isRecording: false, isPaused: false }),
-  setTranscribedText: (text: string) => set({ transcribedText: text }),
+  recordingStatus: RecordingStatus.NotRecording,
+  onRecordingStatusChange: (status: RecordingStatus) => set({ recordingStatus: status }),
+  audio: null,
+  setAudio: (audio: Blob) => set({ audio }),
 }));
 
 export default useRecordingStore;
