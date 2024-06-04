@@ -3,10 +3,12 @@ import { Button } from "@/components/ui/button";
 import useRecordingStore, { RecordingStatus } from "@/store/recording-store";
 import useTranscribeStore, { TranscribeStatus } from "@/store/transcribe-store";
 import Hint from "../hint";
+import useAudioRecorder from "@/hooks/useAudioRecorder";
 
 const RecordHandler = () => {
-  const { recordingStatus, onRecordingStatusChange } = useRecordingStore();
+  const { recordingStatus } = useRecordingStore();
   const { transcribeStatus, onTranscribeStatusChange } = useTranscribeStore();
+  const { startRecording, pauseRecording, stopRecording, resumeRecording } = useAudioRecorder();
 
   const disabledStatuses = {
     start: [RecordingStatus.Recording, RecordingStatus.Paused],
@@ -22,10 +24,7 @@ const RecordHandler = () => {
             variant="ghost"
             size="icon"
             className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300"
-            onClick={() => {
-              onRecordingStatusChange(RecordingStatus.Recording);
-              onTranscribeStatusChange(TranscribeStatus.NotTranscribing);
-            }}
+            onClick={() => startRecording()}
             disabled={disabledStatuses.start.includes(recordingStatus)}
           >
             <Mic className="h-6 w-6" />
@@ -46,10 +45,10 @@ const RecordHandler = () => {
             className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300"
             onClick={() => {
               if (recordingStatus === RecordingStatus.Paused) {
-                onRecordingStatusChange(RecordingStatus.Recording);
+                resumeRecording();
                 return;
               }
-              onRecordingStatusChange(RecordingStatus.Paused);
+              pauseRecording();
             }}
             disabled={disabledStatuses.pause.includes(recordingStatus)}
           >
@@ -65,7 +64,7 @@ const RecordHandler = () => {
             variant="ghost"
             size="icon"
             className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300"
-            onClick={() => onRecordingStatusChange(RecordingStatus.Finished)}
+            onClick={() => stopRecording()}
             disabled={disabledStatuses.stop.includes(recordingStatus)}
           >
             <CircleStop className="h-6 w-6" />
