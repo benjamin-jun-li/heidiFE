@@ -5,14 +5,15 @@ const TranscribeHandler = () => {
   const { transcribeStatus, transcribedText } = useTranscribeStore();
   const loadingDots = useLoadingDots();
 
-  if (transcribeStatus === TranscribeStatus.NotTranscribing) {
-    return null;
-  }
-
   const renderContent = {
+    [TranscribeStatus.NotTranscribing]: (
+      <p>{transcribedText || "No transcription available"}</p>
+    ),
     [TranscribeStatus.Loading]: <p>Transcribing audio{loadingDots}</p>,
-    [TranscribeStatus.Finished]: <p>{transcribedText || "No transcription available"}</p>,
-  }
+    [TranscribeStatus.Finished]: (
+      <p>{transcribedText || "No transcription available"}</p>
+    ),
+  };
   
   return (
     <section>
@@ -23,7 +24,7 @@ const TranscribeHandler = () => {
         </div>
       </div>
     </section>
-  )
-}
+  );
+};
 
-export default TranscribeHandler
+export default TranscribeHandler;
