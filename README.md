@@ -1,30 +1,60 @@
-# React + TypeScript + Vite
+# Heidi Health Frontend Assessment
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Overview
+This is a simple voice to text application developed in React + Vite that allows users to record their voice and convert it to text. The application uses the browser's built-in speech recognition API to convert the user's voice to text.
 
-Currently, two official plugins are available:
+Recording is implemented using the `MediaRecorder` API.
+Speech to text is implemented using the `Web Speech` API.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+This application used Tailwind CSS and ShadcnUI for styling and design.
 
-## Expanding the ESLint configuration
+Global state management are utilised by Zustand.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Tests
+This application uses Vitest, which is fully compatible with Jest and React Testing Library. Three component tests are written, located at `src/__test__`
 
-- Configure the top-level `parserOptions` property like this:
+1. `header.test.tsx`
+This checks the rendering and anchors of the header component.
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
+2. `record-handler.test.tsx`
+This checks the recording functionality of the application
+
+3. `voice-handler.test.tsx`
+This checks the states are updated correctly each iteration of the voice recognition.
+
+## Commands
+
+I used pnpm as package manager, so you can run the following commands:
+
+### Install Dependencies
+```bash
+pnpm install
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+### ESLint
+```bash
+pnpm run lint
+```
+
+### Run the application
+```bash
+pnpm run dev
+```
+
+### Run the tests
+```bash
+pnpm run test
+```
+
+### Build the application
+```bash
+pnpm run build
+```
+
+## CI
+This application uses GitHub Actions for CI/CD. The workflow is located at `.github/workflows/main.yml`
+
+In the CI, the following tasks are checked:
+- Linting
+- Type-check
+- Tests
