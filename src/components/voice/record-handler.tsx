@@ -30,6 +30,7 @@ const RecordHandler = () => {
         <Hint label="Start recording" align="start" alignOffset={-65}>
           <Button
             variant="ghost"
+            aria-label="start-recording"
             size="icon"
             className="text-gray-500 hover:text-gray-700"
             onClick={async () => {
@@ -58,6 +59,7 @@ const RecordHandler = () => {
           <Button
             variant="ghost"
             size="icon"
+            aria-label="pause-recording"
             className="text-gray-500 hover:text-gray-700"
             onClick={() => {
               if (recordingStatus === RecordingStatus.Paused) {
@@ -81,6 +83,7 @@ const RecordHandler = () => {
           <Button
             variant="ghost"
             size="icon"
+            aria-label="stop-recording"
             className="text-gray-500 hover:text-gray-700"
             onClick={() => {
               stopRecording();
