@@ -19,9 +19,11 @@ const useTranscribeStore = create<ITranscribeStore>((set) => ({
     set({ transcribeStatus: status }),
   transcribedText: "",
   setTranscribedText: (text: string, append = true) =>
-    set((state) => ({
-      transcribedText: append ? state.transcribedText + text : text,
-    })),
+    set((state) => {
+      const newText = append ? state.transcribedText + ' ' + text : text;
+      const cleanedText = newText.replace(/\s+/g, ' ').trim();
+      return { transcribedText: cleanedText };
+    }),
 }));
 
 export default useTranscribeStore;

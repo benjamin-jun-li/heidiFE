@@ -1,17 +1,18 @@
 import useLoadingDots from "@/hooks/useLoadingDots";
 import useTranscribeStore, { TranscribeStatus } from "@/store/transcribe-store";
+import { memo } from "react";
 
-const TranscribeHandler = () => {
+const TranscribeHandler = memo(() => {
   const { transcribeStatus, transcribedText } = useTranscribeStore();
   const loadingDots = useLoadingDots();
-
+  
   const renderContent = {
     [TranscribeStatus.NotTranscribing]: (
-      <p>{transcribedText || "No transcription available"}</p>
+      <p className="whitespace-pre-wrap">{transcribedText || "No transcription available"}</p>
     ),
     [TranscribeStatus.Loading]: <p>Transcribing audio{loadingDots}</p>,
     [TranscribeStatus.Finished]: (
-      <p>{transcribedText || "No transcription available"}</p>
+      <p className="whitespace-pre-wrap">{transcribedText || "No transcription available"}</p>
     ),
   };
   
@@ -25,6 +26,8 @@ const TranscribeHandler = () => {
       </div>
     </section>
   );
-};
+});
+
+TranscribeHandler.displayName = "TranscribeHandler";
 
 export default TranscribeHandler;

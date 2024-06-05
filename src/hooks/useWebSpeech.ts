@@ -36,7 +36,7 @@ const useSpeechRecognition = () => {
       for (let i = 0; i < event.results.length; i++) {
         const transcript: string = event.results[i][0].transcript;
         if (event.results[i].isFinal) {
-          finalTranscript += transcript;
+          finalTranscript += transcript + '\n';
         }
       }
       setTranscribedText(finalTranscript);
