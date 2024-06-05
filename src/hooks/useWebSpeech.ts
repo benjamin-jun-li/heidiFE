@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import useTranscribeStore, { TranscribeStatus } from "@/store/transcribe-store";
+import { toast } from "sonner";
 
 declare global {
   interface Window {
@@ -16,7 +17,7 @@ const useSpeechRecognition = () => {
 
   useEffect(() => {
     if (!("webkitSpeechRecognition" in window)) {
-      alert("Your browser does not support Web Speech API. Please use Chrome.");
+      toast.error("Your browser does not support Web Speech API. Please use Chrome.");
       return;
     }
 
@@ -42,7 +43,7 @@ const useSpeechRecognition = () => {
     };
 
     recognitionInstance.onerror = (event: RecognitionEvent) => {
-      console.error(event.error);
+      toast.error(event.error);
       onTranscribeStatusChange(TranscribeStatus.NotTranscribing);
     };
 
@@ -58,28 +59,24 @@ const useSpeechRecognition = () => {
     if (recognition) {
       recognition.start();
       setTranscribedText("", false);
-      console.log("Recognition started");
     }
   };
 
   const stopRecognition = () => {
     if (recognition) {
       recognition.stop();
-      console.log("Recognition stopped");
     }
   };
 
   const pauseRecognition = () => {
     if (recognition) {
       recognition.stop();
-      console.log("Recognition paused");
     }
   };
 
   const resumeRecognition = () => {
     if (recognition) {
       recognition.start();
-      console.log("Recognition resumed");
     }
   };
 

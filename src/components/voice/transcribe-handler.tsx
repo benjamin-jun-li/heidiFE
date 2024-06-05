@@ -17,9 +17,9 @@ const TranscribeHandler = () => {
   
   return (
     <section>
-      <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-4 w-full">
+      <div className="bg-gray-100 rounded-lg p-4 w-full">
         <h3 className="text-lg font-medium mb-2">Transcription</h3>
-        <div className="text-gray-500 dark:text-gray-400 h-32 overflow-auto">
+        <div className="text-gray-500 h-32 overflow-auto">
           {renderContent[transcribeStatus]}
         </div>
       </div>

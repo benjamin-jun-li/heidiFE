@@ -1,15 +1,16 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
+import React from "react";
+import ReactDOM from "react-dom/client";
 import {
   RouterProvider,
   createBrowserRouter,
   Route,
   createRoutesFromElements,
-} from 'react-router-dom';
-import './index.css';
-import Home from './pages/home';
-import Header from './components/header';
-import Footer from './components/footer';
+} from "react-router-dom";
+import "./index.css";
+import Home from "./pages/home";
+import Header from "./components/header";
+import Footer from "./components/footer";
+import { Toaster } from "@/components/ui/sonner";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -19,7 +20,7 @@ const router = createBrowserRouter(
   )
 );
 
-const rootElement = document.getElementById('root');
+const rootElement = document.getElementById("root");
 if (rootElement) {
   rootElement.style.height = "100vh";
   ReactDOM.createRoot(rootElement).render(
@@ -27,6 +28,7 @@ if (rootElement) {
       <Header />
       <RouterProvider router={router} />
       <Footer />
+      <Toaster richColors />
     </React.StrictMode>
   );
 }

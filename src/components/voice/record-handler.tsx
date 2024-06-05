@@ -4,6 +4,7 @@ import useRecordingStore, { RecordingStatus } from "@/store/recording-store";
 import Hint from "../hint";
 import useAudioRecorder from "@/hooks/useAudioRecorder";
 import useSpeechRecognition from "@/hooks/useWebSpeech";
+import { toast } from "sonner";
 
 const RecordHandler = () => {
   const { recordingStatus } = useRecordingStore();
@@ -24,16 +25,21 @@ const RecordHandler = () => {
 
   return (
     <div className="flex items-center justify-between mb-6">
-      <h2 className="text-2xl font-bold">Audio Recorder</h2>
+      <h2 className="text-2xl font-bold text-gray-700">Audio Recorder</h2>
       <div className="flex items-center space-x-4">
         <Hint label="Start recording" align="start" alignOffset={-65}>
           <Button
             variant="ghost"
             size="icon"
-            className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300"
-            onClick={() => {
-              startRecording();
-              startRecognition();
+            className="text-gray-500 hover:text-gray-700"
+            onClick={async () => {
+              try {
+                await navigator.mediaDevices.getUserMedia({ audio: true });
+                startRecording();
+                startRecognition();
+              } catch (error) {
+                toast.error("Microphone permission is required to record audio");
+              }
             }}
             disabled={disabledStatuses.start.includes(recordingStatus)}
           >
@@ -52,7 +58,7 @@ const RecordHandler = () => {
           <Button
             variant="ghost"
             size="icon"
-            className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300"
+            className="text-gray-500 hover:text-gray-700"
             onClick={() => {
               if (recordingStatus === RecordingStatus.Paused) {
                 resumeRecording();
@@ -75,7 +81,7 @@ const RecordHandler = () => {
           <Button
             variant="ghost"
             size="icon"
-            className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300"
+            className="text-gray-500 hover:text-gray-700"
             onClick={() => {
               stopRecording();
               stopRecognition();

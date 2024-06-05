@@ -10,35 +10,45 @@ const VoiceHandler = () => {
 
   const renderContent = {
     [RecordingStatus.NotRecording]: (
-      <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-4">
-        <p className="text-gray-500 dark:text-gray-400 text-sm">
-          Your recorded audio will be transcribed and displayed here.
+      <div className="bg-gray-100 rounded-lg p-4">
+        <p className="text-gray-500 text-sm">
+          Your recorded audio will be transcribed and displayed here. <br />
+          You need to allow microphone access to start recording. <br />
+          If you accidentally denied access, you can change it in your browser
+          settings, then refresh the page.
         </p>
       </div>
     ),
     [RecordingStatus.Paused]: (
-      <div className="bg-yellow-100 dark:bg-yellow-800 rounded-lg p-4">
-        <p className="text-yellow-500 dark:text-yellow-400 text-sm">
-          Recording paused
-        </p>
+      <div className="bg-yellow-100 rounded-lg p-4">
+        <p className="text-yellow-500 text-sm">Recording paused</p>
       </div>
     ),
     [RecordingStatus.Recording]: (
-      <div className="bg-red-100 dark:bg-red-800 rounded-lg p-4">
-        <p className="text-red-500 dark:text-red-400 text-sm">
-          Recording in progress
-        </p>
+      <div className="bg-red-100 rounded-lg p-4">
+        <p className="text-red-500 text-sm">Recording in progress</p>
       </div>
     ),
     // Don't render transcribe handler if offline
-    [RecordingStatus.Finished]: <div className="space-y-4">
-      <AudioPlayer />
-      {!isOffline && <TranscribeHandler />}
-    </div>,
+    [RecordingStatus.Finished]: (
+      <div className="space-y-4">
+        <AudioPlayer />
+        {!isOffline ? (
+          <TranscribeHandler />
+        ) : (
+          <div className="bg-red-100 rounded-lg p-4">
+            <p className="text-red-500 text-sm">
+              You are currently offline, the transcribed text from your voice
+              will be automatically processed once you are online
+            </p>
+          </div>
+        )}
+      </div>
+    ),
   };
 
   return (
-    <section className="bg-white dark:bg-gray-950 rounded-lg shadow-md p-6 max-w-md mx-auto">
+    <section className="bg-white rounded-lg shadow-md p-6 max-w-md mx-auto">
       <RecordHandler />
       {renderContent[recordingStatus]}
     </section>
